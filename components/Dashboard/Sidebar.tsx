@@ -6,11 +6,15 @@ import { cn } from "@/lib/utils";
 import { Menu, SquarePen } from "lucide-react";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hook";
+import NewChatModal from "./NewChatModal";
+import ChatRoomList from "./ChatRoomList";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const auth = useAppSelector((state: any) => state.auth);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const auth = useAppSelector((state) => state.auth);
+  const chatRooms = useAppSelector((state) => state.chatRoom);
+  
   return (
     <aside
       className={cn(
@@ -28,19 +32,24 @@ export default function Sidebar() {
         </Button>
       </div>
 
-      <div className={cn("p-4 space-y-2")}>
+      <div className="p-4 space-y-2">
         <Button
           className="w-full justify-start hover:!bg-zinc-600 cursor-pointer"
           variant="ghost"
           disabled={!auth.isAuthenticated}
-          
+          onClick={() => setModalOpen(true)}
         >
           <SquarePen />
           <span className={cn("", collapsed && "hidden")}> New Chat</span>
         </Button>
+        <NewChatModal open={modalOpen} setOpen={setModalOpen} />
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2">
+      <div
+        id="chatroom-scrollable"
+        className="flex-1 overflow-y-auto p-2"
+        style={{ minHeight: 0 }} 
+      >
         <div className={cn("text-gray-500", collapsed && "hidden")}>
           <div className="mb-2">Recent</div>
           {!auth.isAuthenticated ? (
@@ -56,15 +65,7 @@ export default function Sidebar() {
               </Link>
             </div>
           ) : (
-            <div className="space-y-2">
-              {/* Render chatroom list here */}
-              <div className="p-2 rounded-full hover:bg-zinc-600">
-                Chatroom 1
-              </div>
-              <div className="p-2 rounded-full hover:bg-zinc-600">
-                Chatroom 2
-              </div>
-            </div>
+            <ChatRoomList />
           )}
         </div>
       </div>

@@ -84,7 +84,6 @@ export function CountrySelect({
       <SelectTrigger id="country" className="w-full">
         <SelectValue
           placeholder="Select Country"
-          // @ts-ignore
           children={getCountryLabel(countries, value)}
         />
       </SelectTrigger>

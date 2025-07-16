@@ -6,7 +6,6 @@ import Image from "next/image";
 
 export default function Header() {
   const auth = useAppSelector((state: any) => state.auth);
-  console.log("auth: ", auth);
   return (
     <header className="sticky top-0 z-30 w-full flex items-center justify-between px-6 h-16 ">
       <div className="flex items-center gap-1">

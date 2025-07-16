@@ -1,0 +1,42 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface Message {
+  id: string;
+  sender: "user" | "ai";
+  text: string;
+  image?: string;
+  timestamp: string;
+  page: number;
+}
+
+export interface ChatRoom {
+  id: string;
+  title: string;
+  createdAt: string;
+  lastUpdated: string;
+  messages: Message[];
+}
+
+interface ChatRoomState {
+  chatRooms: ChatRoom[];
+}
+
+const initialState: ChatRoomState = {
+  chatRooms: [],
+};
+
+const chatRoomSlice = createSlice({
+  name: "chatroom",
+  initialState,
+  reducers: {
+    rehydrateChatRooms: (state, action: PayloadAction<ChatRoom[]>) => {
+      state.chatRooms = action.payload;
+    },
+    createChatroom: (state, action: PayloadAction<ChatRoom>) => {
+      state.chatRooms.unshift(action.payload);
+    },
+  },
+});
+
+export const { rehydrateChatRooms, createChatroom } = chatRoomSlice.actions;
+export default chatRoomSlice.reducer;

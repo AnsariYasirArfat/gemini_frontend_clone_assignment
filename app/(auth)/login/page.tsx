@@ -22,8 +22,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hook";
 import { login } from "@/store/reducers/authSlice";
+import { LOCALSTORAGE_KEYS } from "@/constants/localStorage";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
 
-// Define schemas
 const baseSchema = z.object({
   country: z
     .string("Country code is required")
@@ -46,7 +47,7 @@ const otpSchema = baseSchema.extend({
 type LoginForm = z.infer<typeof baseSchema> & { otp?: string };
 
 export default function LoginPage() {
-  const [auth, setAuth] = useLocalStorage("auth", {
+  const [auth, setAuth] = useLocalStorage(LOCALSTORAGE_KEYS.AUTH, {
     isAuthenticated: false,
     phone: "",
     country: "",
@@ -109,13 +110,12 @@ export default function LoginPage() {
       handleSendOtp(data.country, data.phone);
       return;
     }
-    // Simulate verifying OTP
     setTimeout(() => {
-      const userData={
+      const userData = {
         isAuthenticated: true,
         phone: data.phone,
         country: data.country,
-      }
+      };
       setAuth(userData);
       dispatch(login(userData));
       setLoading(false);
@@ -265,25 +265,7 @@ export default function LoginPage() {
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
-                    <svg
-                      className="animate-spin h-5 w-5 mr-2"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z"
-                      />
-                    </svg>
+                    <SpinnerLoader />
                     {otpSent ? "Verifying..." : "Sending..."}
                   </span>
                 ) : otpSent ? (

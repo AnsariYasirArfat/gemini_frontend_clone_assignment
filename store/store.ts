@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/authSlice";
+import chatRoomReducer from "./reducers/chatRoomSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: { auth: authReducer },
+    reducer: { auth: authReducer ,chatRoom: chatRoomReducer,},
   });
 };
 

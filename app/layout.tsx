@@ -7,6 +7,7 @@ import StoreProvider from "@/components/providers/StoreProvider";
 import Sidebar from "@/components/Dashboard/Sidebar";
 import Header from "@/components/Dashboard/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
+import ChatroomProvider from "@/components/providers/ChatroomProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,13 +42,15 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AuthProvider>
-              <div className="flex h-[100svh]">
-                <Sidebar />
-                <main className="flex-1 overflow-y-auto">
-                  <Header />
-                  {children}
-                </main>
-              </div>
+              <ChatroomProvider>
+                <div className="flex h-[100svh]">
+                  <Sidebar />
+                  <main className="flex-1 overflow-y-auto">
+                    <Header />
+                    {children}
+                  </main>
+                </div>
+              </ChatroomProvider>
             </AuthProvider>
           </ThemeProvider>
         </StoreProvider>

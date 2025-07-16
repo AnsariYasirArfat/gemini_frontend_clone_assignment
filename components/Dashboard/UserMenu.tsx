@@ -10,11 +10,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LOCALSTORAGE_KEYS } from "@/constants/localStorage";
 
 export default function UserMenu({ phone }: { phone: string }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [, , removeAuth] = useLocalStorage("auth", null);
+  const [, , removeAuth] = useLocalStorage(LOCALSTORAGE_KEYS.AUTH, null);
 
   const handleLogout = () => {
     dispatch(logout());

@@ -1,3 +1,4 @@
+import { LocalStorageKey } from "@/constants/localStorage";
 import { useState, useEffect } from "react";
 
 /**
@@ -9,7 +10,7 @@ import { useState, useEffect } from "react";
  * @returns {[T, (value: T | ((prevValue: T) => T)) => void, () => void]} A tuple containing the current value, a setter function, and a remover function.
  */
 export function useLocalStorage<T>(
-  key: string,
+  key: LocalStorageKey,
   initialValue: T
 ): [T, (value: T | ((prevValue: T) => T)) => void, () => void] {
   // State to store our value
