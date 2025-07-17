@@ -78,7 +78,7 @@ export default function ChatRoomList() {
       >
         <div className="space-y-2">
           {displayedItems.map((room) => (
-            <div key={room.id} className="flex items-center group p-2 rounded-full hover:bg-zinc-600 ">
+            <div key={room.id} className="flex items-center group p-2 rounded-full hover:bg-zinc-400/20 ">
               <Link
                 href={`/chats/${room.id}`}
                 className="flex-1 block p-1 cursor-pointer transition truncate whitespace-nowrap"

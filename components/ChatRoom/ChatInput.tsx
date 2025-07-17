@@ -46,7 +46,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
   return (
     <div className="w-full px-4 py-3 ">
       <div className="max-w-[760px] mx-auto">
-        <div className="border border-zinc-700 rounded-3xl p-4">
+        <div className="border border-zinc-400/50 rounded-3xl p-4">
           {image && (
             <div className="mb-3">
               <div className="relative inline-block">
@@ -58,7 +58,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute -top-2 -right-2 bg-zinc-800 text-white rounded-full p-1 hover:bg-red-300 transition-colors"
+                  className="absolute -top-2 -right-2 bg-zinc-600  rounded-full p-1 hover:bg-red-300 transition-colors"
                   title="Remove image"
                 >
                   <X size={14} />
@@ -69,7 +69,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
           
           <textarea
             ref={textareaRef}
-            className="w-full bg-transparent outline-none text-white placeholder-zinc-400 resize-none min-h-[20px] max-h-[120px] overflow-y-auto"
+            className="w-full bg-transparent outline-none  placeholder-zinc-400 resize-none min-h-[20px] max-h-[120px] overflow-y-auto"
             placeholder="Ask Gemini"
             value={text}
             onChange={handleTextareaChange}
@@ -88,7 +88,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 rounded-full hover:bg-zinc-700 transition-colors"
+              className="p-2 rounded-full hover:!bg-zinc-400/50 transition-colors"
               title="Upload image"
               disabled={loading}
             >
@@ -107,7 +107,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
               type="button"
               onClick={handleSend}
               disabled={loading || (!text.trim() && !image)}
-              className="rounded-full p-2 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-700 disabled:cursor-not-allowed transition-colors"
+              className="rounded-full p-2 hover:!bg-zinc-400/50 disabled:bg-zinc-700 disabled:cursor-not-allowed transition-colors"
               size="sm"
             >
               <Send size={18} />

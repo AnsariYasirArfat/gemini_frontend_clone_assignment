@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hook";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageList from "@/components/ChatRoom/MessageList";
 import ChatInput from "@/components/ChatRoom/ChatInput";
 import { toast } from "sonner";
@@ -30,6 +30,7 @@ export default function ChatRoomPage() {
     []
   );
   const [typing, setTyping] = useState(false);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const allMessages = chatRoom?.messages || [];
 
@@ -44,8 +45,15 @@ export default function ChatRoomPage() {
     direction: "up",
   });
 
+    useEffect(() => {
+      if (shouldScrollToBottom) {
+        setShouldScrollToBottom(false);
+      }
+    }, [paginatedMessages.length]);
+    
   const handleSend = (text: string, image?: string) => {
     if (!chatRoom || typing) return;
+    setShouldScrollToBottom(true);
     const userMsg: Message = {
       id: uuidv4(),
       sender: "user",
@@ -93,6 +101,7 @@ export default function ChatRoomPage() {
         )
       );
       setTyping(false);
+      setShouldScrollToBottom(true);
     }, aiDelay);
   };
 
@@ -128,6 +137,7 @@ export default function ChatRoomPage() {
           loadMore={loadMore}
           hasMore={hasMore}
           isLoading={isLoading}
+          shouldScrollToBottom={shouldScrollToBottom}
         />
         {typing && (
           <div className="pb-1 max-w-[760px] w-full mx-auto">

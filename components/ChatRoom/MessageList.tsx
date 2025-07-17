@@ -10,6 +10,7 @@ interface MessageListProps {
   loadMore: () => void;
   hasMore: boolean;
   isLoading: boolean;
+  shouldScrollToBottom?: boolean;
 }
 
 export default function MessageList({
@@ -18,18 +19,19 @@ export default function MessageList({
   loadMore,
   hasMore,
   isLoading,
+  shouldScrollToBottom = false,
 }: MessageListProps) {
   const SCROLLABLE_ID = "chat-message-scrollable";
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
+    if (shouldScrollToBottom && scrollRef.current) {
       scrollRef.current.scrollTo({
         top: 0,
         behavior: "smooth",
       });
     }
-  }, [messages]);
+  }, [shouldScrollToBottom, messages]);
 
   return (
     <div
@@ -67,8 +69,8 @@ export default function MessageList({
             <div
               className={`relative  max-w-[80%] px-5 py-3 ${
                 msg.sender === "user"
-                  ? "bg-gradient-to-br from-[#333537] to-[#424548] text-white rounded-3xl rounded-tr-md"
-                  : "bg-transparent text-gray-100 border rounded-3xl rounded-tl-md"
+                  ? " bg-[#f0f4f9] dark:bg-gradient-to-br from-[#333537] to-[#424548]  rounded-3xl rounded-tr-md"
+                  : "bg-transparent  border rounded-3xl rounded-tl-md"
               } shadow-md`}
             >
               {msg.image && (
@@ -84,7 +86,7 @@ export default function MessageList({
                   {new Date(msg.timestamp).toLocaleTimeString()}
                 </span>
                 <button
-                  className="ml-2 p-1 rounded hover:bg-zinc-700 transition"
+                  className="ml-2 p-1 rounded hover:!bg-zinc-400/50 transition"
                   onClick={() => onCopy(msg.text)}
                   title="Copy to clipboard"
                 >

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/common/ModeToggle";
 import { cn } from "@/lib/utils";
-import { Menu, SquarePen } from "lucide-react";
+import { Menu, SquarePen, Search } from "lucide-react";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hook";
 import NewChatModal from "./NewChatModal";
@@ -13,7 +13,7 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const auth = useAppSelector((state) => state.auth);
-  
+
   return (
     <aside
       className={cn(
@@ -26,14 +26,24 @@ export default function Sidebar() {
           variant="ghost"
           size="icon"
           onClick={() => setCollapsed((c) => !c)}
+          className="hover:!bg-zinc-400/20"
         >
           <Menu size={20} />
         </Button>
+        <Link
+          href="/search"
+          className={cn(
+            "ml-2 p-2 rounded-full hover:bg-zinc-400/20 transition-colors",
+            collapsed && "hidden"
+          )}
+        >
+          <Search size={16} />
+        </Link>
       </div>
 
       <div className="p-4 space-y-2">
         <Button
-          className="w-full justify-start hover:!bg-zinc-600 cursor-pointer"
+          className="w-full justify-start hover:!bg-zinc-400/20 cursor-pointer"
           variant="ghost"
           disabled={!auth.isAuthenticated}
           onClick={() => setModalOpen(true)}
@@ -47,9 +57,9 @@ export default function Sidebar() {
       <div
         id="chatroom-scrollable"
         className="flex-1 overflow-y-auto p-2"
-        style={{ minHeight: 0 }} 
+        style={{ minHeight: 0 }}
       >
-        <div className={cn("text-gray-500", collapsed && "hidden")}>
+        <div className={cn("text-gray-700 dark:text-gray-300", collapsed && "hidden")}>
           <div className="mb-2">Recent</div>
           {!auth.isAuthenticated ? (
             <div className="bg-gray-200 dark:bg-zinc-800 p-4 rounded-lg text-center">
