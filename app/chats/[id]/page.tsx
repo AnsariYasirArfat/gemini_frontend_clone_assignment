@@ -108,7 +108,7 @@ export default function ChatRoomPage() {
           Chatroom not found
         </div>
         <div className="text-gray-500 mb-6">
-          The chatroom you are looking for does not exist or was deleted.
+          The chat room you are looking for does not exist or was deleted.
         </div>
         <Link href="/" passHref>
           <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">

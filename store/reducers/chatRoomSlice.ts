@@ -26,7 +26,7 @@ const initialState: ChatRoomState = {
 };
 
 const chatRoomSlice = createSlice({
-  name: "chatroom",
+  name: "chatRoom",
   initialState,
   reducers: {
     rehydrateChatRooms: (state, action: PayloadAction<ChatRoom[]>) => {
@@ -46,8 +46,11 @@ const chatRoomSlice = createSlice({
         room.lastUpdated = new Date().toISOString();
       }
     },
+    deleteChatroom: (state, action: PayloadAction<string>) => {
+      state.chatRooms = state.chatRooms.filter(room => room.id !== action.payload);
+    },
   },
 });
 
-export const { rehydrateChatRooms, createChatroom, updateChatroomMessages } = chatRoomSlice.actions;
+export const { rehydrateChatRooms, createChatroom, updateChatroomMessages, deleteChatroom } = chatRoomSlice.actions;
 export default chatRoomSlice.reducer;
