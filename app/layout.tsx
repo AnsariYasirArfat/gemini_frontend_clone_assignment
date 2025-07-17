@@ -51,7 +51,7 @@ export default function RootLayout({
             </AuthProvider>
           </ThemeProvider>
         </StoreProvider>
-        <Toaster />
+        <Toaster position="top-center"/>
       </body>
     </html>
   );

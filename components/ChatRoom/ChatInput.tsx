@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Paperclip, Send, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface ChatInputProps {
   onSend: (text: string, image?: string) => void;
@@ -19,6 +20,7 @@ export default function ChatInput({ onSend, loading }: ChatInputProps) {
       onSend(text, image);
       setText("");
       setImage(undefined);
+      toast.success("Message sent successful!");
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }

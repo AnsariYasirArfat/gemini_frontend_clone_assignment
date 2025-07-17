@@ -11,8 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LOCALSTORAGE_KEYS } from "@/constants/localStorage";
+import { toast } from "sonner";
 
-export default function UserMenu({ phone }: { phone: string }) {
+export default function UserMenu() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [, , removeAuth] = useLocalStorage(LOCALSTORAGE_KEYS.AUTH, null);
@@ -21,6 +22,7 @@ export default function UserMenu({ phone }: { phone: string }) {
     dispatch(logout());
     removeAuth();
     router.replace("/");
+    toast.success("Logout successful!");
   };
 
   return (

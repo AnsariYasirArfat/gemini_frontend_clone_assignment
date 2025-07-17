@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/common/ModeToggle";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useAppSelector } from "@/store/hook";
 import NewChatModal from "./NewChatModal";
 import ChatRoomList from "./ChatRoomList";
+import ChatRoomListSkeleton from "./ChatRoomListSkeleton";
 
 interface SidebarProps {
   closeDrawer?: () => void;
@@ -18,8 +19,13 @@ export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const auth = useAppSelector((state) => state.auth);
-  console.log("isDrawer: ", isDrawer);
-  // Helper to handle navigation and close drawer if needed
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timeout);
+  }, []);
+  
   const handleNav = (cb?: () => void) => {
     if (cb) cb();
     if (isDrawer && closeDrawer) closeDrawer();
@@ -97,7 +103,9 @@ export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
           )}
         >
           <div className="mb-2">Recent</div>
-          {!auth.isAuthenticated ? (
+          {loading ? (
+            <ChatRoomListSkeleton count={8} />
+          ) : !auth.isAuthenticated ? (
             <div className="bg-gray-200 dark:bg-zinc-800 p-4 rounded-lg text-center">
               <div className="font-semibold mb-1">
                 Sign in to start saving your chats

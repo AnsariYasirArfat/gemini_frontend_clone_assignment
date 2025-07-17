@@ -15,7 +15,7 @@ export default function SearchPage() {
   const debouncedQuery = useDebounce(query, 300);
 
   const [filteredRooms, setFilteredRooms] = useState(chatRooms);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -36,9 +36,9 @@ export default function SearchPage() {
   });
 
   return (
-    <div className="flex flex-col items-center flex-1 w-full min-h-0">
+    <div className="flex flex-col items-center flex-1 w-full min-h-0 px-4">
       <div className="w-full flex-1 min-h-0 flex flex-col max-w-[760px]">
-        <h1 className="text-3xl font-semibold py-8">Search</h1>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold py-8">Search</h1>
         <SearchBar
           value={query}
           loading={loading}
@@ -46,7 +46,7 @@ export default function SearchPage() {
           onClear={() => setQuery("")}
         />
         <div className="flex-1 flex flex-col min-h-0">
-          <div className="text-lg font-semibold mb-2">Recent</div>
+          <div className="text-sm sm:text-base lg:text-lg font-semibold mb-2">Recent</div>
           {loading ? (
             <SearchListSkeleton count={5} />
           ) : filteredRooms.length === 0 ? (

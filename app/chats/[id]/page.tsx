@@ -16,6 +16,7 @@ import { LOCALSTORAGE_KEYS } from "@/constants/localStorage";
 import Link from "next/link";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import TypingIndicator from "@/components/ChatRoom/TypingIndicator";
+import ChatRoomSkeleton from "@/components/ChatRoom/ChatRoomSkeleton";
 
 const MESSAGES_PER_PAGE = 20;
 
@@ -31,6 +32,13 @@ export default function ChatRoomPage() {
   );
   const [typing, setTyping] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+
+  // Add loading state for skeleton
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timeout = setTimeout(() => setLoading(false), 600); 
+    return () => clearTimeout(timeout);
+  }, []);
 
   const allMessages = chatRoom?.messages || [];
 
@@ -110,6 +118,10 @@ export default function ChatRoomPage() {
     toast.success("Copied to clipboard!");
   };
 
+  if (loading) {
+    return <ChatRoomSkeleton />;
+  }
+
   if (!chatRoom) {
     return (
       <div className="flex flex-col items-center justify-center h-full py-16">
@@ -130,7 +142,7 @@ export default function ChatRoomPage() {
 
   return (
     <div className="flex flex-col flex-1 h-full min-h-0">
-      <div className="flex-1 min-h-0 flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col  px-4 ">
         <MessageList
           messages={paginatedMessages}
           onCopy={handleCopy}

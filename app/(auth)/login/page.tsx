@@ -161,7 +161,7 @@ export default function LoginPage() {
                 <div>
                   <Label
                     htmlFor="country"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="text-sm mb-1 font-medium text-gray-700 dark:text-gray-300"
                   >
                     Country Code
                   </Label>
