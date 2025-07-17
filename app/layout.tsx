@@ -8,6 +8,7 @@ import Sidebar from "@/components/Dashboard/Sidebar";
 import Header from "@/components/Dashboard/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
 import ChatroomProvider from "@/components/providers/ChatroomProvider";
+import AppShell from "@/components/common/AppShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,13 +44,9 @@ export default function RootLayout({
           >
             <AuthProvider>
               <ChatroomProvider>
-                <div className="flex h-[100svh]">
-                  <Sidebar />
-                  <main className="flex-1 overflow-y-auto">
-                    <Header />
-                    {children}
-                  </main>
-                </div>
+                <AppShell>
+                  {children}
+                </AppShell>
               </ChatroomProvider>
             </AuthProvider>
           </ThemeProvider>

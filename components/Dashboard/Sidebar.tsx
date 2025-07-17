@@ -13,7 +13,6 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const auth = useAppSelector((state) => state.auth);
-  const chatRooms = useAppSelector((state) => state.chatRoom);
   
   return (
     <aside
@@ -70,7 +69,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="mt-auto p-4 flex justify-center">
+      <div className="mt-auto p-4 flex justify-start">
         <ModeToggle />
       </div>
     </aside>

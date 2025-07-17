@@ -35,8 +35,19 @@ const chatRoomSlice = createSlice({
     createChatroom: (state, action: PayloadAction<ChatRoom>) => {
       state.chatRooms.unshift(action.payload);
     },
+    updateChatroomMessages: (
+      state,
+      action: PayloadAction<{ chatRoomId: string; messages: Message[] }>
+    ) => {
+      const { chatRoomId, messages } = action.payload;
+      const room = state.chatRooms.find((r) => r.id === chatRoomId);
+      if (room) {
+        room.messages = messages;
+        room.lastUpdated = new Date().toISOString();
+      }
+    },
   },
 });
 
-export const { rehydrateChatRooms, createChatroom } = chatRoomSlice.actions;
+export const { rehydrateChatRooms, createChatroom, updateChatroomMessages } = chatRoomSlice.actions;
 export default chatRoomSlice.reducer;

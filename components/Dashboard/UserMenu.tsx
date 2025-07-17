@@ -27,7 +27,7 @@ export default function UserMenu({ phone }: { phone: string }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 focus:outline-none"
+          className="flex items-center gap-2 cursor-pointer p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 focus:outline-none"
           aria-label="User menu"
         >
           <UserCircle2 className="w-7 h-7" />

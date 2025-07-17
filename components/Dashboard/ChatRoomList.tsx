@@ -5,6 +5,7 @@ import { ChatRoom } from "@/store/reducers/chatRoomSlice";
 import SpinnerLoader from "../common/SpinnerLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -30,18 +31,19 @@ export default function ChatRoomList() {
           </div>
         )
       }
-      scrollThreshold="95%"
+      scrollThreshold="0.9"
       scrollableTarget="chatroom-scrollable"
       style={{ overflow: "visible" }}
     >
       <div className="space-y-2">
         {displayedItems.map((room) => (
-          <div
+          <Link
             key={room.id}
-            className="p-2 rounded-full hover:bg-zinc-600 cursor-pointer transition truncate whitespace-nowrap"
+            href={`/chats/${room.id}`}
+            className="block p-2 rounded-full hover:bg-zinc-600 cursor-pointer transition truncate whitespace-nowrap"
           >
             {room.title}
-          </div>
+          </Link>
         ))}
       </div>
     </InfiniteScroll>

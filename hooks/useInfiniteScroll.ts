@@ -3,18 +3,25 @@ import { useState, useMemo } from "react";
 interface UseInfiniteScrollOptions<T> {
   items: T[];
   itemsPerPage?: number;
+  direction?: "down" | "up";
 }
 
 export function useInfiniteScroll<T>({
   items,
   itemsPerPage = 10,
+  direction = "down",
 }: UseInfiniteScrollOptions<T>) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const displayedItems = useMemo(() => {
-    return items.slice(0, currentPage * itemsPerPage);
-  }, [items, currentPage, itemsPerPage]);
+    if (direction === "down") {
+      return items.slice(0, currentPage * itemsPerPage);
+    } else {
+      const start = Math.max(items.length - currentPage * itemsPerPage, 0);
+      return items.slice(start).reverse();
+    }
+  }, [items, currentPage, itemsPerPage, direction]);
 
   const loadMore = async () => {
     setIsLoading(true);

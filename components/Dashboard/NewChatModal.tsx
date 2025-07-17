@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SpinnerLoader from "../common/SpinnerLoader";
+import { useRouter } from "next/navigation";
 
 const chatroomSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -34,6 +35,7 @@ interface NewChatModalProps {
 
 export default function NewChatModal({ open, setOpen }: NewChatModalProps) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [chatRooms, setChatRooms] = useLocalStorage<ChatRoom[]>(
     LOCALSTORAGE_KEYS.CHATROOMS,
     []
@@ -62,6 +64,7 @@ export default function NewChatModal({ open, setOpen }: NewChatModalProps) {
       form.reset();
       setLoading(false);
       setOpen(false);
+      router.push(`/chats/${newChatRoom.id}`);
     }, 1200); 
   };
 
