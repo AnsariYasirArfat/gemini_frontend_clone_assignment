@@ -22,7 +22,7 @@ export default function Header() {
       <div className="flex items-center gap-1">
         {/* Hamburger menu for mobile */}
         <DrawerSidebar />
-        <Link href={"/"} className="flex items-center gap-1">
+        <Link href={"/"} className="flex items-center gap-1 cursor-pointer">
           <Image
             src={"/kuvaka_logo.png"}
             width={30}

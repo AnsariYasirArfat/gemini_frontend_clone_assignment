@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import TypingIndicator from "@/components/ChatRoom/TypingIndicator";
 import ChatRoomSkeleton from "@/components/ChatRoom/ChatRoomSkeleton";
+import { MessageCircle } from "lucide-react";
 
 const MESSAGES_PER_PAGE = 20;
 
@@ -132,7 +133,7 @@ export default function ChatRoomPage() {
           The chat room you are looking for does not exist or was deleted.
         </div>
         <Link href="/" passHref>
-          <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
+          <button className="px-6 py-2 rounded bg-blue-600 hover:bg-blue-700 transition">
             Go Home
           </button>
         </Link>
@@ -142,15 +143,26 @@ export default function ChatRoomPage() {
 
   return (
     <div className="flex flex-col flex-1 h-full min-h-0">
-      <div className="flex-1 min-h-0 flex flex-col  px-4 ">
-        <MessageList
-          messages={paginatedMessages}
-          onCopy={handleCopy}
-          loadMore={loadMore}
-          hasMore={hasMore}
-          isLoading={isLoading}
-          shouldScrollToBottom={shouldScrollToBottom}
-        />
+      <div className="flex-1 min-h-0 flex flex-col px-4 ">
+        {/* Show empty state if there are no messages */}
+        {paginatedMessages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center flex-1 py-12 text-center text-zinc-500">
+            <MessageCircle className="w-12 h-12 mb-4 text-zinc-400" />
+            <div className="text-xl font-semibold mb-2">No messages yet</div>
+            <div className="text-sm">
+              Start the conversation by sending a message below!
+            </div>
+          </div>
+        ) : (
+          <MessageList
+            messages={paginatedMessages}
+            onCopy={handleCopy}
+            loadMore={loadMore}
+            hasMore={hasMore}
+            isLoading={isLoading}
+            shouldScrollToBottom={shouldScrollToBottom}
+          />
+        )}
         {typing && (
           <div className="pb-1 max-w-[760px] w-full mx-auto">
             <TypingIndicator text="Gemini is thinking" />
