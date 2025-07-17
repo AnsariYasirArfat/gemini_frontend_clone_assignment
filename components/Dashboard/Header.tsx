@@ -8,7 +8,7 @@ export default function Header() {
   const auth = useAppSelector((state: any) => state.auth);
   return (
     <header className="w-full flex items-center justify-between px-6 h-16 ">
-      <div className="flex items-center gap-1">
+      <Link href={'/'} className="flex items-center gap-1">
         <Image
           src={"/kuvaka_logo.png"}
           width={30}
@@ -16,7 +16,7 @@ export default function Header() {
           alt="kuvaka-logo"
         />
         <span className="font-bold text-lg text-[#a246ff]">Kuvaka</span>
-      </div>
+      </Link>
       <div className="flex items-center gap-4">
         <a
           href="https://www.kuvaka.io/thekuvakaprocess"
