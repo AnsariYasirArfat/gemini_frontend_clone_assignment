@@ -31,9 +31,10 @@ type ChatroomForm = z.infer<typeof chatroomSchema>;
 interface NewChatModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  closeDrawer?: () => void;
 }
 
-export default function NewChatModal({ open, setOpen }: NewChatModalProps) {
+export default function NewChatModal({ open, setOpen,closeDrawer }: NewChatModalProps) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [chatRooms, setChatRooms] = useLocalStorage<ChatRoom[]>(
@@ -64,8 +65,9 @@ export default function NewChatModal({ open, setOpen }: NewChatModalProps) {
       form.reset();
       setLoading(false);
       setOpen(false);
+      if (closeDrawer) closeDrawer();
       router.push(`/chats/${newChatRoom.id}`);
-    }, 1200); 
+    }, 1200);
   };
 
   return (

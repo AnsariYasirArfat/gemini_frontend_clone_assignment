@@ -9,49 +9,80 @@ import { useAppSelector } from "@/store/hook";
 import NewChatModal from "./NewChatModal";
 import ChatRoomList from "./ChatRoomList";
 
-export default function Sidebar() {
+interface SidebarProps {
+  closeDrawer?: () => void;
+  isDrawer?: boolean;
+}
+
+export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const auth = useAppSelector((state) => state.auth);
+  console.log("isDrawer: ", isDrawer);
+  // Helper to handle navigation and close drawer if needed
+  const handleNav = (cb?: () => void) => {
+    if (cb) cb();
+    if (isDrawer && closeDrawer) closeDrawer();
+  };
 
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-[#f0f4f9] dark:bg-[#282a2c] transition-all duration-300",
-        collapsed ? "w-16" : "w-64"
+        "flex flex-col gap-2 sm:gap-4 p-4 h-[100svh] bg-[#f0f4f9] dark:bg-[#282a2c] transition-all duration-300 ",
+        collapsed ? "w-16 " : "w-64 "
       )}
     >
-      <div className="flex items-center justify-between p-4">
+      <div
+        className={cn(
+          "flex items-center",
+          collapsed ? "justify-center " : "justify-between"
+        )}
+      >
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setCollapsed((c) => !c)}
-          className="hover:!bg-zinc-400/20"
+          onClick={() => handleNav(() => setCollapsed((c) => !c))}
+          className={` flex justify-center items-center hover:!bg-zinc-400/20`}
         >
           <Menu size={20} />
         </Button>
         <Link
           href="/search"
           className={cn(
-            "ml-2 p-2 rounded-full hover:bg-zinc-400/20 transition-colors",
+            "p-2 rounded-full hover:bg-zinc-400/20 transition-colors",
             collapsed && "hidden"
           )}
+          onClick={() => handleNav()}
         >
           <Search size={16} />
         </Link>
       </div>
 
-      <div className="p-4 space-y-2">
+      <div
+        className={cn(
+          "flex items-center",
+          collapsed ? "justify-center " : "justify-between"
+        )}
+      >
         <Button
-          className="w-full justify-start hover:!bg-zinc-400/20 cursor-pointer"
+          className={cn(
+            "w-full  hover:!bg-zinc-400/20 cursor-pointer",
+            collapsed ? "justify-center " : "justify-start"
+          )}
           variant="ghost"
           disabled={!auth.isAuthenticated}
-          onClick={() => setModalOpen(true)}
+          onClick={() => {
+            setModalOpen(true);
+          }}
         >
           <SquarePen />
           <span className={cn("", collapsed && "hidden")}> New Chat</span>
         </Button>
-        <NewChatModal open={modalOpen} setOpen={setModalOpen} />
+        <NewChatModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+          closeDrawer={closeDrawer}
+        />
       </div>
 
       <div
@@ -59,7 +90,12 @@ export default function Sidebar() {
         className="flex-1 overflow-y-auto p-2"
         style={{ minHeight: 0 }}
       >
-        <div className={cn("text-gray-700 dark:text-gray-300", collapsed && "hidden")}>
+        <div
+          className={cn(
+            "text-gray-700 dark:text-gray-300",
+            collapsed && "hidden"
+          )}
+        >
           <div className="mb-2">Recent</div>
           {!auth.isAuthenticated ? (
             <div className="bg-gray-200 dark:bg-zinc-800 p-4 rounded-lg text-center">
@@ -69,12 +105,16 @@ export default function Sidebar() {
               <div className="text-xs mb-2">
                 Once you're signed in, you can access your recent chats here.
               </div>
-              <Link href="/login" className="text-blue-600 hover:underline">
+              <Link
+                href="/login"
+                className="text-blue-600 hover:underline"
+                onClick={() => handleNav()}
+              >
                 Sign in
               </Link>
             </div>
           ) : (
-            <ChatRoomList />
+            <ChatRoomList onRoomClick={handleNav} />
           )}
         </div>
       </div>

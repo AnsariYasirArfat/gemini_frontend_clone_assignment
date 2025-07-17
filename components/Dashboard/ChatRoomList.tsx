@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function ChatRoomList() {
+export default function ChatRoomList({ onRoomClick }: { onRoomClick?: () => void }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -81,13 +81,14 @@ export default function ChatRoomList() {
             <div key={room.id} className="flex items-center group p-2 rounded-full hover:bg-zinc-400/20 ">
               <Link
                 href={`/chats/${room.id}`}
+                onClick={onRoomClick}
                 className="flex-1 block p-1 cursor-pointer transition truncate whitespace-nowrap"
               >
                 {room.title}
               </Link>
               <button
                 onClick={() => openDeleteModal(room.id)}
-                className="ml-2 p-2 rounded-full hover:text-red-300 hover:bg-zinc-500  transition-colors text-zinc-400 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                className="ml-2 p-2 rounded-full hover:text-red-300 hover:bg-zinc-500  transition-colors text-zinc-400 lg:opacity-0 group-hover:opacity-100 focus:opacity-100"
                 title="Delete chat room"
                 tabIndex={0}
               >
