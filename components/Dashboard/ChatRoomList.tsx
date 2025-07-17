@@ -14,7 +14,11 @@ import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function ChatRoomList({ onRoomClick }: { onRoomClick?: () => void }) {
+export default function ChatRoomList({
+  onRoomClick,
+}: {
+  onRoomClick?: () => void;
+}) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -78,10 +82,14 @@ export default function ChatRoomList({ onRoomClick }: { onRoomClick?: () => void
       >
         <div className="space-y-2">
           {displayedItems.map((room) => (
-            <div key={room.id} className="flex items-center group p-2 rounded-full hover:bg-zinc-400/20 ">
+            <div
+              key={room.id}
+              className="flex items-center group p-2 rounded-full hover:bg-zinc-400/20 "
+            >
               <Link
                 href={`/chats/${room.id}`}
-                onClick={onRoomClick}
+                onNavigate={() => onRoomClick && onRoomClick()}
+                passHref
                 className="flex-1 block p-1 cursor-pointer transition truncate whitespace-nowrap"
               >
                 {room.title}

@@ -25,7 +25,7 @@ export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
     const timeout = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timeout);
   }, []);
-  
+
   const handleNav = (cb?: () => void) => {
     if (cb) cb();
     if (isDrawer && closeDrawer) closeDrawer();
@@ -58,7 +58,7 @@ export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
             "p-2 rounded-full hover:bg-zinc-400/20 transition-colors",
             collapsed && "hidden"
           )}
-          onClick={() => handleNav()}
+          onNavigate={() => handleNav()}
         >
           <Search size={16} />
         </Link>
@@ -116,7 +116,7 @@ export default function Sidebar({ closeDrawer, isDrawer }: SidebarProps) {
               <Link
                 href="/login"
                 className="text-blue-600 hover:underline"
-                onClick={() => handleNav()}
+                onNavigate={() => handleNav()}
               >
                 Sign in
               </Link>
